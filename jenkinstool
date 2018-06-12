@@ -35,5 +35,4 @@ done
 
 job=Build${PROJECT^}${PLATFORM^}
 
-echo $job
 `$job`

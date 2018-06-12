@@ -3,7 +3,6 @@
 source $root/config/config.sh
 
 function BuildZzcmsTest(){
-	set -x
 	refspec=${1:-"origin/develop"}
 	if [ "${refspec%%/*}" == "origin" ]; then
 		refspec=$refspec
@@ -27,5 +26,6 @@ function BuildZzcmsTest(){
 					{"name":"region", "value":"'$region'"},
 					{"name":"deployer", "value":"'$deployer'"}
 				]
-			}'
+			}' > /dev/null 2>&1
+	echo "echo $?"
 }
