@@ -2,7 +2,8 @@
 
 source $root/config/config.sh
 
-function BuildCMSTestEnv(){
+function BuildZzcmsTest(){
+	set -x
 	refspec=${1:-"origin/develop"}
 	if [ "${refspec%%/*}" == "origin" ]; then
 		refspec=$refspec
@@ -14,7 +15,7 @@ function BuildCMSTestEnv(){
 	region="us-east-1"
 	stack_name="cms-test"
 	deployer="deployer-azft"
-	curl -k -X POST $jenkins_host/job/AZ-CMS-test.dev/build \
+	curl -s -k -X POST $jenkins_host/job/AZ-CMS-test.dev/build \
 		--user $jenkins_user:$jenkins_pswd \
 		--data-urlencode json='
 			{
