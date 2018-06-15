@@ -118,3 +118,141 @@ function BuildAzaziePre(){
 
 	echo "echo $?"
 }
+
+function BuildErpProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	repo="ssh://git@192.168.0.27:7022/erp/erp.git"
+	type="prod"
+	distenv="erp"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.prod.git.deploy/build \
+		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"repo", "value":"'$repo'"},
+					{"name":"type", "value":"'$type'"},
+					{"name":"distenv", "value":"'$distenv'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildErpPre(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	repo="ssh://git@192.168.0.27:7022/erp/erp.git"
+	type="prod"
+	distenv="erp-pre"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.ppppppp.git.deploy/build \
+		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"repo", "value":"'$repo'"},
+					{"name":"type", "value":"'$type'"},
+					{"name":"distenv", "value":"'$distenv'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildShieldProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	repo="ssh://git@192.168.0.27:7022/erp/shield.git"
+	type="prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/shield.prod.git.deploy/build \
+		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"repo", "value":"'$repo'"},
+					{"name":"type", "value":"'$type'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildMpsProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	repo="ssh://git@192.168.0.27:7022/erp/mps.git"
+	type="prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/mps.prod.git.deploy/build \
+		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"repo", "value":"'$repo'"},
+					{"name":"type", "value":"'$type'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildMpsPre(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	repo="ssh://git@192.168.0.27:7022/erp/mps.git"
+	type="pre"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/mps.prod.git.deploy/build \
+		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"repo", "value":"'$repo'"},
+					{"name":"type", "value":"'$type'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildRomeoProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	repo="ssh://git@192.168.0.27:7022/erp/romeo.git"
+	type="prod"
+	distenv="romeo"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/romeo.prod.git.deploy/build \
+		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"repo", "value":"'$repo'"},
+					{"name":"type", "value":"'$type'"},
+					{"name":"distenv", "value":"'$distenv'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 export root=`dirname $0`
 
 source $root/job/job.sh
@@ -14,7 +14,7 @@ while [ $# -gt 0 ]; do
     opt=$1
     shift
     case "$opt" in
-        azazie|zzcms|loveprom|zzeditor|erp|shell|mps|romeo) 
+        azazie|zzcms|loveprom|zzeditor|erp|shield|mps|romeo) 
             PROJECT=$opt       
             ;;
         prod|pre|test)  
@@ -35,4 +35,4 @@ done
 
 job=Build${PROJECT^}${PLATFORM^}
 
-`$job`
+`$job $REFSPEC $ID`
