@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 export root=`dirname $0`
 
 source $root/job/job.sh
@@ -14,13 +13,13 @@ while [ $# -gt 0 ]; do
     opt=$1
     shift
     case "$opt" in
-        azazie|zzcms|loveprom|zzeditor|erp|shield|mps|romeo) 
+        azazie|zzcms|loveprom|admkt|zzeditor|erp|shield|mps|romeo) 
             PROJECT=$opt       
             ;;
         prod|pre|test)  
             PLATFORM=$opt        
             ;;
-        feature/*|develop|release/*)
+        feature/*|develop|release/*|ptest*)
             REFSPEC=$opt
             ;;
         0|1|2|3|4|5|6|7|8|9)

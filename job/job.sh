@@ -58,6 +58,35 @@ function BuildZzcmsProd(){
 	echo "echo $?"
 }
 
+function BuildAdmktProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	stack_id=1
+	stage_name="admkt-prod"
+	region="us-east-1"
+	stack_name="admkt-prod"
+	deployer="deployer-zz-01"
+	curl -s -k -X POST $jenkins_host/view/AZ-PROD/job/AZ-PC-ADMKT-prod.dev/build \
+		--user $jenkins_user:$jenkins_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"stack_id", "value":"'$stack_id'"},
+					{"name":"stage_name", "value":"'$stage_name'"},
+					{"name":"stack_name", "value":"'$stack_name'"},
+					{"name":"region", "value":"'$region'"},
+					{"name":"deployer", "value":"'$deployer'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+
 function BuildAzaziePre(){
 	refspec=${1:-"origin/develop"}
 	if [ "${refspec%%/*}" == "origin" ]; then
@@ -120,114 +149,109 @@ function BuildAzaziePre(){
 }
 
 function BuildErpProd(){
-	refspec=${1:-"origin/develop"}
-	if [ "${refspec%%/*}" == "origin" ]; then
-		refspec=$refspec
-	else
-		refspec=origin/$refspec
-	fi
-	repo="ssh://git@192.168.0.27:7022/erp/erp.git"
+	refspec=${1:-"develop"}
+	appname="erp"
 	type="prod"
 	distenv="erp"
-	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.prod.git.deploy/build \
+	deployer="deployer-erp-prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.prod.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		$curl_proxy_opt \
 		--data-urlencode json='
 			{
 				"parameter": [
 					{"name":"refspec", "value":"'$refspec'"}, 
-					{"name":"repo", "value":"'$repo'"},
+					{"name":"appname", "value":"'$appname'"}
 					{"name":"type", "value":"'$type'"},
-					{"name":"distenv", "value":"'$distenv'"}
+					{"name":"distenv", "value":"'$distenv'"},
+					{"name":"deployer", "value":"'$deployer'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"
 }
 
 function BuildErpPre(){
-	refspec=${1:-"origin/develop"}
-	if [ "${refspec%%/*}" == "origin" ]; then
-		refspec=$refspec
-	else
-		refspec=origin/$refspec
-	fi
-	repo="ssh://git@192.168.0.27:7022/erp/erp.git"
-	type="prod"
+	refspec=${1:-"develop"}
+	appname="erp"
+	type="pre"
 	distenv="erp-pre"
-	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.ppppppp.git.deploy/build \
+	deployer="deployer-erp-prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.pre.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
 		--data-urlencode json='
 			{
 				"parameter": [
 					{"name":"refspec", "value":"'$refspec'"}, 
-					{"name":"repo", "value":"'$repo'"},
+					{"name":"appname", "value":"'$appname'"},
 					{"name":"type", "value":"'$type'"},
-					{"name":"distenv", "value":"'$distenv'"}
+					{"name":"distenv", "value":"'$distenv'"},
+					{"name":"deployer", "value":"'$deployer'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"
 }
 
 function BuildShieldProd(){
-	refspec=${1:-"origin/develop"}
-	if [ "${refspec%%/*}" == "origin" ]; then
-		refspec=$refspec
-	else
-		refspec=origin/$refspec
-	fi
-	repo="ssh://git@192.168.0.27:7022/erp/shield.git"
+	refspec=${1:-"develop"}
+	appname="shield"
 	type="prod"
-	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/shield.prod.git.deploy/build \
+	distenv="shield"
+	deployer="deployer-erp-prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/shield.prod.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		$curl_proxy_opt \
 		--data-urlencode json='
 			{
 				"parameter": [
 					{"name":"refspec", "value":"'$refspec'"}, 
-					{"name":"repo", "value":"'$repo'"},
-					{"name":"type", "value":"'$type'"}
+					{"name":"appname", "value":"'$appname'"}, 
+					{"name":"type", "value":"'$type'"},
+					{"name":"distenv", "value":"'$distenv'"},
+					{"name":"deployer", "value":"'$deployer'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"
 }
 
 function BuildMpsProd(){
-	refspec=${1:-"origin/develop"}
-	if [ "${refspec%%/*}" == "origin" ]; then
-		refspec=$refspec
-	else
-		refspec=origin/$refspec
-	fi
-	repo="ssh://git@192.168.0.27:7022/erp/mps.git"
+	refspec=${1:-"develop"}
+	appname="mps"
 	type="prod"
-	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/mps.prod.git.deploy/build \
+	distenv="mps"
+	deployer="deployer-erp-prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/mps.prod.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		$curl_proxy_opt \
 		--data-urlencode json='
 			{
 				"parameter": [
 					{"name":"refspec", "value":"'$refspec'"}, 
-					{"name":"repo", "value":"'$repo'"},
-					{"name":"type", "value":"'$type'"}
+					{"name":"appname", "value":"'$appname'"},
+					{"name":"type", "value":"'$type'"},
+					{"name":"distenv", "value":"'$distenv'"},
+					{"name":"deployer", "value":"'$deployer'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"
 }
 
 function BuildMpsPre(){
-	refspec=${1:-"origin/develop"}
-	if [ "${refspec%%/*}" == "origin" ]; then
-		refspec=$refspec
-	else
-		refspec=origin/$refspec
-	fi
-	repo="ssh://git@192.168.0.27:7022/erp/mps.git"
+	refspec=${1:-"develop"}
+	appname="appname"
 	type="pre"
-	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/mps.prod.git.deploy/build \
+	distenv="mps-pre"
+	deployer="deployer-erp-prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/mps.pre.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		$curl_proxy_opt \
 		--data-urlencode json='
 			{
 				"parameter": [
 					{"name":"refspec", "value":"'$refspec'"}, 
-					{"name":"repo", "value":"'$repo'"},
-					{"name":"type", "value":"'$type'"}
+					{"name":"appname", "value":"'$appname'"},
+					{"name":"type", "value":"'$type'"},
+					{"name":"distenv", "value":"'$distenv'"},
+					{"name":"deployer", "value":"'$deployer'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"
