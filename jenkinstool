@@ -13,7 +13,7 @@ while [ $# -gt 0 ]; do
     opt=$1
     shift
     case "$opt" in
-        azazie|zzcms|loveprom|admkt|zzeditor|erp|shield|mps|romeo) 
+        azazie|zzcms|loveprom|admkt|feed|newsletter|editor|erp|shield|mps|romeo) 
             PROJECT=$opt       
             ;;
         prod|pre|test)  
@@ -26,7 +26,7 @@ while [ $# -gt 0 ]; do
             ID=$opt
             ;;
         *)
-            echo "Usage $0 [azazie|zzcms|loveprom|zzeditor|erp|shell|mps|romeo] [prod|pre|test] refspec [ID]"
+            echo "Usage $0 [azazie|zzcms|loveprom|feed|newsletter|editor|erp|shell|mps|romeo] [prod|pre|test] refspec [ID]"
             exit 1
             ;;
     esac

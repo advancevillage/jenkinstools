@@ -58,6 +58,90 @@ function BuildZzcmsProd(){
 	echo "echo $?"
 }
 
+function BuildEditorProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	stack_id=0
+	stage_name="zzeditor-prod"
+	region="us-east-1"
+	stack_name="cms-prod"
+	deployer="deployer-zz-01"
+	curl -s -k -X POST $jenkins_host/job/ZZEditor-prod.dev/build \
+		--user $jenkins_user:$jenkins_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"stack_id", "value":"'$stack_id'"},
+					{"name":"stage_name", "value":"'$stage_name'"},
+					{"name":"stack_name", "value":"'$stack_name'"},
+					{"name":"region", "value":"'$region'"},
+					{"name":"deployer", "value":"'$deployer'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildFeedProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	stack_id=0
+	stage_name="azfeed-prod"
+	region="us-east-1"
+	stack_name="cms-prod"
+	deployer="deployer-zz-01"
+	curl -s -k -X POST $jenkins_host/job/ZZFeed-prod.dev/build \
+		--user $jenkins_user:$jenkins_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"stack_id", "value":"'$stack_id'"},
+					{"name":"stage_name", "value":"'$stage_name'"},
+					{"name":"stack_name", "value":"'$stack_name'"},
+					{"name":"region", "value":"'$region'"},
+					{"name":"deployer", "value":"'$deployer'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildNewsletterProd(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	stack_id=0
+	stage_name="zznl-prod"
+	region="us-east-1"
+	stack_name="cms-prod"
+	deployer="deployer-zz-01"
+	curl -s -k -X POST $jenkins_host/job/ZZNewsLetter-prod.dev/build \
+		--user $jenkins_user:$jenkins_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"stack_id", "value":"'$stack_id'"},
+					{"name":"stage_name", "value":"'$stage_name'"},
+					{"name":"stack_name", "value":"'$stack_name'"},
+					{"name":"region", "value":"'$region'"},
+					{"name":"deployer", "value":"'$deployer'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
 function BuildAdmktProd(){
 	refspec=${1:-"origin/develop"}
 	if [ "${refspec%%/*}" == "origin" ]; then
@@ -258,25 +342,71 @@ function BuildMpsPre(){
 }
 
 function BuildRomeoProd(){
+	refspec=${1:-"develop"}
+	appname="romeo"
+	type="prod"
+	distenv="romeo"
+	deployer="deployer-erp-prod"
+	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/romeo.prod.pipeline.deploy/build \
+		--user $jenkins_erp_user:$jenkins_erp_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"appname", "value":"'$appname'"}, 
+					{"name":"type", "value":"'$type'"},
+					{"name":"distenv", "value":"'$distenv'"},
+					{"name":"deployer", "value":"'$deployer'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
+function BuildFhlProd(){
 	refspec=${1:-"origin/develop"}
 	if [ "${refspec%%/*}" == "origin" ]; then
 		refspec=$refspec
 	else
 		refspec=origin/$refspec
 	fi
-	repo="ssh://git@192.168.0.27:7022/erp/romeo.git"
-	type="prod"
-	distenv="romeo"
-	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/romeo.prod.git.deploy/build \
-		--user $jenkins_erp_user:$jenkins_erp_pswd \
+	env="prod"
+	stack_name="zz-logman-prod"
+	deployer="deployer-zz-01"
+	curl -s -k -X POST $jenkins_host//view/ERP/job/ERP-FHL-prod.dev/build \
+		--user $jenkins_user:$jenkins_pswd \
 		--data-urlencode json='
 			{
 				"parameter": [
 					{"name":"refspec", "value":"'$refspec'"}, 
-					{"name":"repo", "value":"'$repo'"},
-					{"name":"type", "value":"'$type'"},
-					{"name":"distenv", "value":"'$distenv'"}
+					{"name":"env", "value":"'$env'"},
+					{"name":"stack_name", "value":"'$stack_name'"},
+					{"name":"deployer", "value":"'$deployer'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"
 }
+
+function BuildFhlPre(){
+	refspec=${1:-"origin/develop"}
+	if [ "${refspec%%/*}" == "origin" ]; then
+		refspec=$refspec
+	else
+		refspec=origin/$refspec
+	fi
+	env="pre"
+	stack_name="zz-logman-prod"
+	deployer="deployer-zz-01"
+	curl -s -k -X POST $jenkins_host//view/ERP/job/ERP-FHL-prod.dev/build \
+		--user $jenkins_user:$jenkins_pswd \
+		--data-urlencode json='
+			{
+				"parameter": [
+					{"name":"refspec", "value":"'$refspec'"}, 
+					{"name":"env", "value":"'$env'"},
+					{"name":"stack_name", "value":"'$stack_name'"},
+					{"name":"deployer", "value":"'$deployer'"}
+				]
+			}' > /dev/null 2>&1
+	echo "echo $?"
+}
+
