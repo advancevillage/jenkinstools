@@ -233,7 +233,6 @@ function BuildAzaziePre(){
 }
 
 function BuildErpProd(){
-	set -x
 	refspec=${1:-"develop"}
 	appname="erp"
 	type="prod"
