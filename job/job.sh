@@ -233,6 +233,7 @@ function BuildAzaziePre(){
 }
 
 function BuildErpProd(){
+	set -x
 	refspec=${1:-"develop"}
 	appname="erp"
 	type="prod"
@@ -240,12 +241,11 @@ function BuildErpProd(){
 	deployer="deployer-erp-prod"
 	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.prod.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
-		$curl_proxy_opt \
 		--data-urlencode json='
 			{
 				"parameter": [
 					{"name":"refspec", "value":"'$refspec'"}, 
-					{"name":"appname", "value":"'$appname'"}
+					{"name":"appname", "value":"'$appname'"},
 					{"name":"type", "value":"'$type'"},
 					{"name":"distenv", "value":"'$distenv'"},
 					{"name":"deployer", "value":"'$deployer'"}
