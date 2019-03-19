@@ -233,12 +233,13 @@ function BuildAzaziePre(){
 }
 
 function BuildErpProd(){
-	set -x
 	refspec=${1:-"develop"}
 	appname="erp"
 	type="prod"
 	distenv="erp"
 	deployer="deployer-erp-prod"
+    composer="true"
+    npm="true"
 	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.prod.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
 		--data-urlencode json='
@@ -248,7 +249,9 @@ function BuildErpProd(){
 					{"name":"appname", "value":"'$appname'"},
 					{"name":"type", "value":"'$type'"},
 					{"name":"distenv", "value":"'$distenv'"},
-					{"name":"deployer", "value":"'$deployer'"}
+					{"name":"deployer", "value":"'$deployer'"},
+					{"name":"composer", "value":"'$composer'"},
+					{"name":"composer", "value":"'$npm'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"
@@ -260,6 +263,8 @@ function BuildErpPre(){
 	type="pre"
 	distenv="erp-pre"
 	deployer="deployer-erp-prod"
+    composer="true"
+    npm="true"
 	curl -s -k -X POST $jenkins_erp_host/view/7.ERP/job/erp.pre.pipeline.deploy/build \
 		--user $jenkins_erp_user:$jenkins_erp_pswd \
 		--data-urlencode json='
@@ -269,7 +274,9 @@ function BuildErpPre(){
 					{"name":"appname", "value":"'$appname'"},
 					{"name":"type", "value":"'$type'"},
 					{"name":"distenv", "value":"'$distenv'"},
-					{"name":"deployer", "value":"'$deployer'"}
+					{"name":"deployer", "value":"'$deployer'"},
+					{"name":"composer", "value":"'$composer'"},
+					{"name":"npm", "value":"'$npm'"}
 				]
 			}' > /dev/null 2>&1
 	echo "echo $?"

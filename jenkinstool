@@ -13,7 +13,7 @@ while [ $# -gt 0 ]; do
     opt=$1
     shift
     case "$opt" in
-        azazie|zzcms|loveprom|admkt|feed|newsletter|editor|erp|shield|mps|romeo) 
+        azazie|zzcms|loveprom|admkt|feed|newsletter|editor|erp|shield|mps|romeo|fhl) 
             PROJECT=$opt       
             ;;
         prod|pre|test)  
