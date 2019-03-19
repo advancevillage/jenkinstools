@@ -32,6 +32,11 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-job=Build${PROJECT^}${PLATFORM^}
+# mac
+PROJECT=`echo "$PROJECT" | cut -c 1-1 | tr 'a-z' 'A-Z'``echo "$PROJECT" | cut -c 2-`
+PLATFORM=`echo "$PLATFORM" | cut -c 1-1 | tr 'a-z' 'A-Z'``echo "$PLATFORM" | cut -c 2-`
+job=Build${PROJECT}${PLATFORM}
+# linux
+# job=Build${PROJECT^}${PLATFORM^}
 
 `$job $REFSPEC $ID`
